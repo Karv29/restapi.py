@@ -20,11 +20,18 @@ information = [
     }
 ]
 
-@app.route("/")
-def hello_world():
-    return "hello world"
-
-
 @app.route("/add-data",methods=["get"])
 def get_task():
     return flask.jsonify({"data": information})
+
+
+@app.route("/add-data",methods =["post"])
+def get_task():
+    if not flask.request.json :
+        return flask.jsonify({'status': 'error'})
+    newInfo = {'Name' :flask.request.json["Name"],'age': flask.request.json["age"]}
+    information.append(newInfo)
+  
+return flask.jsonify({'status': 'success'})
+app.run()
+
